@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { getProducts } from '../../../public/ServerData/ServerData';
 
 const Projucts = () => {
+
+  useEffect(()=>{
+ const handleProducts=async()=>{
+const products=await getProducts()
+console.log(products)
+ }
+ handleProducts()
+  },[])
   return (
-    <div>
-      Projucts
+    <div className='mt-20'>
+      
 Projucts
     </div>
   );
