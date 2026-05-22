@@ -64,7 +64,7 @@ const Banner = () => {
           />
         </div>
 
-        {/* Right Stats */}
+       
         <div className="flex justify-center gap-10">
           <div className="text-center">
             <h2 className="text-4xl font-bold text-[#b6845c]">

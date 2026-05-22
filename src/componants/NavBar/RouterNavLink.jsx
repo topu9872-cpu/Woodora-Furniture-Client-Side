@@ -7,7 +7,7 @@ const RouterNavLink = ({ to, children }) => {
       <NavLink
         to={to}
         className={({ isActive }) =>
-          ` ${isActive && "text-white bg-[#b6845c]"} rounded-full ease-in-out px-2 py-1 scroll-auto items-center  transition-all overflow-hidden  `
+          ` ${isActive && "text-white bg-[#b6845c]"} rounded-full ease-in-out px-2 py-1 scroll-auto items-center  transition-all `
         }
       >
         {children}
