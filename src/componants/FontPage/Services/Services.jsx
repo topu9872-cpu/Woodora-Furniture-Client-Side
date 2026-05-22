@@ -1,8 +1,9 @@
 import React from 'react';
+import { NavLink } from 'react-router';
 
 const Services = () => {
   return (
-    <div className='bg-zinc-200 flex flex-col lg:flex-row gap-10 justify-between mx-auto w-11/12 p-6 rounded-4xl'>
+    <div className='bg-zinc-200 flex pb-22 flex-col lg:flex-row gap-10 justify-between mx-auto w-11/12 p-6 rounded-4xl'>
       
       <div className='relative flex justify-center mt-4 lg:block'>
         <img
@@ -33,7 +34,7 @@ const Services = () => {
             Our focus is on delivering smooth user experience, clean design, and efficient performance
           </p>
 
-          <ul className='space-y-3 mt-4'>
+          <ul className='space-y-3 mb-10 my-4'>
             <li className='flex gap-4 opacity-80 text-sm sm:text-base'>
               <span className='text-white bg-[#e0a87a] font-bold px-1.5 rounded-full'>1</span>
               Modern and stylish furniture crafted to match your home perfectly.
@@ -49,7 +50,7 @@ const Services = () => {
               Friendly support anytime to help you with orders and issues.
             </li>
           </ul>
-          <button className=' text-[#e0a87a] cursor-pointer text-lg font-bold border border-[#e0a87a] rounded-lg px-2 py-1 mt-6'>Get Offer</button>
+          <NavLink to='/products' className=' text-[#e0a87a] text-center  cursor-pointer text-lg font-bold border border-[#e0a87a] rounded-lg px-2 py-1 mt-10'>Get Offer</NavLink>
         </div>
       </div>
     </div>

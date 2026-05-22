@@ -2,6 +2,7 @@ import React from 'react';
 import Banner from './Banner/Banner';
 import ProjuctCatalog from './ProductCatalog/ProjuctCatalog';
 import Services from './Services/Services';
+import WhyChoose from './WhyChoose/WhyChoose';
 
 const FontPage = () => {
   return (
@@ -9,6 +10,7 @@ const FontPage = () => {
       <Banner/>
       <ProjuctCatalog/>
       <Services/>
+      <WhyChoose/>
     </div>
   );
 };
