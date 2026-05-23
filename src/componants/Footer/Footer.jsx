@@ -3,19 +3,18 @@ import { Link } from "react-router";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#1c1c1c] text-white mt-20">
+    <footer className="bg-[#4c4949] text-white mt-30">
       <div className="w-11/12 mx-auto py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
 
         <div>
-          <h1 className="text-3xl font-bold text-[#b36d34]">Woodora</h1>
+          <h1 className="text-3xl font-bold text-[#ec9751]">Woodora</h1>
           <p className="mt-4 text-gray-300">
             We design premium quality furniture that brings comfort, style, and
             elegance to your home.
           </p>
         </div>
 
-        {/* Quick Links */}
-        <div>
+               <div>
           <h2 className="text-lg font-semibold mb-4">Quick Links</h2>
           <ul className="space-y-2 text-gray-300">
             <li className="hover:underline">

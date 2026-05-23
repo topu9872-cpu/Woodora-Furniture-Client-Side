@@ -23,7 +23,7 @@ const ProjuctCatalog = () => {
     
     
         <div className="mt-10">
-          <ul className="menu menu-horizontal border-2 px-4 border-gray-300 bg-gray-100 rounded-full ">
+          <ul className="menu menu-horizontal  ">
             <ProductSort />
           </ul>
         </div>

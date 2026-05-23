@@ -7,9 +7,10 @@ import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router";
 import Router from "./componants/router/Router";
 import FontPage from "./componants/FontPage/FontPage";
-import Projucts from "./componants/projucts/Projucts";
+import Products from "./componants/products/Products";
 import Cart from "./componants/cart/Cart";
 import Profile from "./componants/profile/Profile";
+import ProductDetails from "./componants/products/productDetails";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -21,7 +22,10 @@ const router = createBrowserRouter([
       },
     {
       path:'/products',
-          Component:Projucts
+          Component:Products
+    },{
+      path:'/products/:id',
+      element:<ProductDetails/>
     },
    { 
     path:'/cart',

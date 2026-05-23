@@ -1,5 +1,6 @@
-import { useEffect, useState, Suspense } from "react";
+import { useMemo, useState } from "react";
 import { getProducts } from "../../../../public/ServerData/ServerData";
+import { Suspense } from "react";
 
 const ProductSort = () => {
   const [selectedSort, setSelectedSort] = useState("all");
@@ -13,11 +14,11 @@ const ProductSort = () => {
     { id: "Storage", label: "Storage" },
   ];
 
-  useEffect(() => {
+  useMemo(() => {
     const handleProductData = async () => {
       const ProductsData = await getProducts();
       setProducts(ProductsData);
-      console.log(ProductsData)
+      console.log(ProductsData);
     };
     handleProductData();
   }, []);
@@ -28,8 +29,8 @@ const ProductSort = () => {
       : products.filter((item) => item.category === selectedSort);
 
   return (
-    <div>
-      <ul className="flex gap-5 items-center font-bold">
+    <>
+      <ul className="flex gap-5 border-2 p-2  border-gray-300 bg-gray-100 rounded-full items-center font-bold">
         {categories.map((item) => (
           <li
             key={item.id}
@@ -50,15 +51,17 @@ const ProductSort = () => {
             key={product._id}
             className="aspect-square overflow-hidden rounded-2xl "
           >
-            <img
-              src={product?.image}
-              alt={product.name}
-              className="w-full h-full object-cover"
-            />
+            <Suspense fallback={<span className="loading loading-spinner text-accent"></span>}>
+              <img
+                src={product?.image}
+                alt={product.name}
+                className="w-full h-full object-cover"
+              />
+            </Suspense>
           </div>
         ))}
       </div>
-    </div>
+    </>
   );
 };
 
