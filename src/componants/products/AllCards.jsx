@@ -1,10 +1,11 @@
-import React from "react";
 import { MdOutlineAttachMoney, MdOutlineStar } from "react-icons/md";
 import { Link } from "react-router";
+import { getProductsPost } from "../../../public/ServerData/ServerData";
+
 const AllCards = ({ products }) => {
   return (
     <div className="mx-auto">
-<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
         {products.map((product) => (
           <Link
             to={`/products/${product._id}`}

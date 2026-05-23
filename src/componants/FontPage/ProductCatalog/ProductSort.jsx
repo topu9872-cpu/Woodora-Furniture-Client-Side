@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
-import { getProducts } from "../../../../public/ServerData/ServerData";
+
 import { Suspense } from "react";
+import { getProductsSearch } from "../../../../public/ServerData/ServerData";
 
 const ProductSort = () => {
   const [selectedSort, setSelectedSort] = useState("all");
@@ -11,12 +12,12 @@ const ProductSort = () => {
     { id: "Living Room", label: "Living Room" },
     { id: "Bedroom", label: "Bedroom" },
     { id: "Office", label: "Office" },
-    { id: "Storage", label: "Storage" },
+   
   ];
 
   useMemo(() => {
     const handleProductData = async () => {
-      const ProductsData = await getProducts();
+      const ProductsData = await getProductsSearch();
       setProducts(ProductsData);
       console.log(ProductsData);
     };

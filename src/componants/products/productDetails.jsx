@@ -1,17 +1,35 @@
 import React, { useEffect, useState } from "react";
-import {
-  getProductDetails,
-} from "../../../public/ServerData/ServerData";
-import {  useParams } from "react-router";
-import { MdOutlineAttachMoney, MdOutlineStar } from "react-icons/md";
-import { FaLayerGroup } from "react-icons/fa";
+import { getProductDetails, getProductsPost } from "../../../public/ServerData/ServerData";
+import { useParams } from "react-router";
 import toast from "react-hot-toast";
 
 const ProductDetails = () => {
   const { id } = useParams();
   const [details, setDetails] = useState(null);
 
- 
+  const [post, setPost] = useState([]);
+
+  const handleBookingItems = async () => {
+     const booking = {
+      productId: details._id,
+      name: details.name,
+      price: details.price,
+      image: details.image,
+      category:details.category,
+      color:details.color,
+      material:details.material,
+      description:details.description
+    };
+
+
+    const cart = await getProductsPost(booking);
+    setPost(cart);
+     if (cart) {
+      toast.success("Order placed successfully!");
+    } else {
+      toast.error("Order failed!");
+    }
+  };
 
   useEffect(() => {
     const handleDetails = async () => {
@@ -20,8 +38,6 @@ const ProductDetails = () => {
     };
     handleDetails();
   }, [id]);
-
- 
 
   if (!details)
     return (
@@ -79,9 +95,7 @@ const ProductDetails = () => {
           </div>
 
           <div className="flex gap-4">
-            
-
-            <button className="btn bg-[#b6845c] text-white border-none hover:bg-[#a3744d]">
+            <button onClick={handleBookingItems } className="btn bg-[#b6845c] text-white border-none hover:bg-[#a3744d]">
               Order Now
             </button>
           </div>
