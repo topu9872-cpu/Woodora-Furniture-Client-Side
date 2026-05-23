@@ -1,10 +1,7 @@
 import { Pagination } from "@heroui/react";
 import React, { useState } from "react";
 
-const ProductsPagination = () => {
-  const [page, setPage] = useState(1);
-  const totalPages = 10;
-
+const ProductsPagination = ({ page, setPage, totalPages }) => {
   return (
     <div className="mt-10">
       <Pagination className="justify-center">
