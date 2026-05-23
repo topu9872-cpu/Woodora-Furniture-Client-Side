@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  getProductDelete,
   getProductDetails,
 } from "../../../public/ServerData/ServerData";
 import {  useParams } from "react-router";
@@ -12,7 +11,7 @@ const ProductDetails = () => {
   const { id } = useParams();
   const [details, setDetails] = useState(null);
 
-  const [isdelete, setIsDelete] = useState(false);
+ 
 
   useEffect(() => {
     const handleDetails = async () => {
@@ -22,12 +21,7 @@ const ProductDetails = () => {
     handleDetails();
   }, [id]);
 
-  const handleDelete = async () => {
-    const deleteItem = await getProductDelete(id);
-    setIsDelete(deleteItem);
-    window.location.reload()
-    toast.success('deleted')
-  };
+ 
 
   if (!details)
     return (
@@ -85,9 +79,7 @@ const ProductDetails = () => {
           </div>
 
           <div className="flex gap-4">
-            <button onClick={handleDelete} className="btn btn-outline">
-              Delete
-            </button>
+            
 
             <button className="btn bg-[#b6845c] text-white border-none hover:bg-[#a3744d]">
               Order Now

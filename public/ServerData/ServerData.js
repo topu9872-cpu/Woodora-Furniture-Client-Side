@@ -22,19 +22,6 @@ export const getProductDetails = async (id) => {
 }
 
 
-export const getProductDelete = async (id) => {
-    try {
-        const res = await fetch(`${import.meta.env.VITE_SERVER_PUBLIC_URL}/products/${id}`,{
-            method:'DELETE'
-        })
-        if (!res.ok) { throw new Error('Failed to fetch products delete data') }
-        return res.json()
-    } catch (error) {
-        console.error(error)
-        return null;
-    }
-};
-
 export const getProductsSearch=async(search='')=>{
     try{
 const res=await fetch(`${import.meta.env.VITE_SERVER_PUBLIC_URL}/products?search=${search}`)

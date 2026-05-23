@@ -1,25 +1,25 @@
-import React from 'react';
+import React from "react";
 import { MdOutlineAttachMoney, MdOutlineStar } from "react-icons/md";
 import { Link } from "react-router";
-const AllCards = ({products}) => {
+const AllCards = ({ products }) => {
   return (
-    <div>
-     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 ">
+    <div className="mx-auto">
+<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
         {products.map((product) => (
           <Link
             to={`/products/${product._id}`}
             key={product._id}
-            className="card bg-[#edede9] p-4 rounded-3xl"
+            className="card  place-items-center bg-[#edede9] p-4 rounded-3xl"
           >
             <div className="w-full h-50 aspect-square overflow-hidden">
               <img
                 src={product.image}
                 alt={product.name}
-                className="object-cover rounded-2xl h-50 w-full"
+                className="object-cover rounded-xl h-50 w-200"
               />
             </div>
             <h1 className="text-lg font-bold">{product.name}</h1>
-            <span className="flex justify-between font-semibold font-serif items-center">
+            <span className="flex justify-between space-x-20 font-semibold font-serif items-center">
               <h4 className="flex items-center">
                 <MdOutlineAttachMoney />
                 {product.price}
@@ -31,7 +31,7 @@ const AllCards = ({products}) => {
             </span>
           </Link>
         ))}
-      </div> 
+      </div>
     </div>
   );
 };
