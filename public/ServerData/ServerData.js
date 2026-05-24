@@ -35,6 +35,17 @@ export const getProductsPost = async (booking) => {
         return res.json()
     } catch (error) {
         console.error(error)
-        return [] ;
+        return [];
     }
 };
+
+export const getCartProducts = async () => {
+    try {
+        const res = await fetch(`${import.meta.env.VITE_SERVER_PUBLIC_URL}/cart`);
+        if (!res.ok) throw new Error('Faild to fetch cart data');
+     return   res.json()
+    } catch (error) {
+        console.error(error)
+        return [];
+    }
+}
