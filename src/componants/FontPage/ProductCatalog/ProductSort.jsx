@@ -19,7 +19,7 @@ const ProductSort = () => {
     const handleProductData = async () => {
       const ProductsData = await getProductsSearch();
       setProducts(ProductsData);
-      console.log(ProductsData);
+      
     };
     handleProductData();
   }, []);

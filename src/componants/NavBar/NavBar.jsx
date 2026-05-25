@@ -1,15 +1,34 @@
 import React from "react";
 import RouterNavLink from "./RouterNavLink";
+import { authClient } from "../lib/auth-client";
+import { useNavigate } from "react-router";
+import { Link } from "react-router";
 
 const NavBar = () => {
-  const NavData = (
-    <ul className="flex gap-8 text-[15px] items-center font-bold">
-      <RouterNavLink to="/">Home</RouterNavLink>
-      <RouterNavLink to="/products">Products</RouterNavLink>
-      <RouterNavLink to="/cart">Cart</RouterNavLink>
-      <RouterNavLink to="/profile">Profile</RouterNavLink>
-    </ul>
-  );
+const NavData = (
+  <>
+    <li><RouterNavLink to="/">Home</RouterNavLink></li>
+    <li><RouterNavLink to="/products">Products</RouterNavLink></li>
+    <li><RouterNavLink to="/cart">Cart</RouterNavLink></li>
+    <li><RouterNavLink to="/profile">Profile</RouterNavLink></li>
+  </>
+);
+
+  const router = useNavigate();
+
+  const { data: session } = authClient.useSession();
+
+  const user = session?.user;
+
+  const handleLogout = async () => {
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router("/login");
+        },
+      },
+    });
+  };
 
   return (
     <div className="mx-auto flex justify-center">
@@ -24,7 +43,6 @@ const NavBar = () => {
                 viewBox="0 0 24 24"
                 stroke="currentColor"
               >
-                
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -33,20 +51,53 @@ const NavBar = () => {
                 />
               </svg>
             </div>
-            <ul
-              tabIndex={-1}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
-            >
-              {NavData}
-            </ul>
+           <ul
+  tabIndex={-1}
+  className="dropdown-content bg-base-100 rounded-box mt-3 p-2 shadow flex flex-col gap-2 w-52"
+>
+  {NavData}
+</ul>
           </div>
           <a className="btn btn-ghost font-bold text-3xl">Woodora</a>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal border-2 border-gray-300 bg-white rounded-full ">{NavData}</ul>
+          <ul className="menu  gap-2 b  p-0 menu-horizontal border-2 border-gray-300 bg-white rounded-full ">
+            {NavData}
+          </ul>
         </div>
         <div className="navbar-end">
-          <a className="btn">Button</a>
+          {user ? (
+            <div className="space-x-5 flex items-center">
+              <h1 className="text-[#b6845c]  ml-6 sm:flex hidden font-bold">
+                {user?.name} !
+              </h1>
+              <img
+                src={
+                  user?.image ||
+                  "https://img.daisyui.com/images/profile/demo/yellingcat@192.webp"
+                }
+                className="w-12 h-12 border-4 border-white shadow-2xl rounded-full sm:flex hidden"
+              />
+              <button onClick={handleLogout} className="btn btn-error">
+                Logout
+              </button>
+            </div>
+          ) : (
+            <div className="space-x-5">
+              <Link
+                to={"/login"}
+                className="btn bg-[#b6845c] text-white font-bold "
+              >
+                Login
+              </Link>
+              <Link
+                to={"/registation"}
+                className="btn bg-[#b6845c] text-white font-bold "
+              >
+                Registration
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -16,36 +16,35 @@ const Registation = () => {
   } = useForm();
 
   const handleSubmitSingup = async (data) => {
-    // e.preventDefault();
 
-    // const formData = Object.fromEntries(new FormData(e.target));
+    const res = await authClient.signUp.email({
+      name: data.name,
+      email: data.email,
+      password: data.password,
+      image:data.image,
+      phone:data.phone
+    });
 
-    try {
-      const res = await authClient.signUp.email({
-        name: data.name,
-        email: data.email,
-        password: data.password,
-      });
-
-      if (res.success) {
-        toast.success(res.success.message || "Account created");
-        navigate("/login");
-      }
-    } catch (err) {
+    if (res) {
+      toast.success( "Account created");
+      navigate("/login");
+    } else {
       toast.error("Registration failed ❌");
-      console.log(err);
+      console.log(error);
     }
   };
 
   const signInGoogle = async () => {
     const data = await authClient.signIn.social({
       provider: "google",
+     callbackURL: "/",
     });
   };
 
   const signInGitHub = async () => {
     const data = await authClient.signIn.social({
       provider: "github",
+
     });
   };
 
@@ -57,7 +56,7 @@ const Registation = () => {
         <input
           {...register("name", { required: "Name is required" })}
           placeholder="Name"
-          className="input w-full mt-0"
+          className="input w-full "
         />
 
         {errors.name && (
@@ -69,7 +68,7 @@ const Registation = () => {
         <input
           {...register("phone", { required: "Phone Number is required" })}
           placeholder="Phone"
-          className="input w-full my-0"
+          className="input w-full "
         />
         {errors.phone && (
           <p className="bg-red-100 text-red-500 text-center  p-0.5 text-sm">
@@ -79,7 +78,7 @@ const Registation = () => {
         <input
           {...register("image", { required: "Image URL is required" })}
           placeholder="Image URL"
-          className="input w-full my-0"
+          className="input w-full "
         />
         {errors.image && (
           <p className="bg-red-100 text-red-500 text-sm text-center  p-0.5">
@@ -90,7 +89,7 @@ const Registation = () => {
           {...register("email", { required: "email is required" })}
           type="email"
           placeholder="Email"
-          className="input w-full my-0"
+          className="input w-full"
         />
         {errors.email && (
           <p className="bg-red-100 text-red-500 text-center text-sm  p-0.5">
@@ -146,7 +145,7 @@ const Registation = () => {
 
       <div className="divider p-0 m-0">or</div>
       {/* Google */}
-      <button
+      <button type="button"
         onClick={signInGoogle}
         className="btn bg-white w-full text-black border-[#e5e5e5]"
       >
@@ -180,7 +179,7 @@ const Registation = () => {
         Login with Google
       </button>
 
-      <button
+      <button type="button"
         onClick={signInGitHub}
         className="btn bg-black w-full text-white border-black"
       >

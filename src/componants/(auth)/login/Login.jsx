@@ -15,14 +15,12 @@ const Login = () => {
   } = useForm();
 
   const handleSubmitLogin = async (data) => {
-    // e.preventDefault();
-    //  { // const formData = Object.fromEntries(new FormData(e.target));}
     const res = await authClient.signIn.email({
       email: data.email,
       password: data.password,
     });
     if (res.error) {
-     toast.error(res.error.message || 'You have to registation')
+     toast.error('You have to registation')
     }else{
        toast.success("Login successful");
       navigate("/");
@@ -33,12 +31,15 @@ const Login = () => {
    const signInGoogle = async () => {
     const data = await authClient.signIn.social({
       provider: "google",
+     
+        callbackURL: "/"
     });
   };
 
    const signInGitHub = async () => {
     const data = await authClient.signIn.social({
       provider: "github",
+        callbackURL: "/"
     });
   };
 
@@ -106,9 +107,9 @@ const Login = () => {
               Don`t have an account{" "}
               <Link
                 className="text-blue-500 hover:underline"
-                to={"/registation"}
+                to={"/registration"}
               >
-                registation
+                registration
               </Link>
             </span>
           </div>
