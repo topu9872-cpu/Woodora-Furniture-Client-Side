@@ -16,17 +16,20 @@ const Registation = () => {
   } = useForm();
 
   const handleSubmitSingup = async (data) => {
-
     const res = await authClient.signUp.email({
       name: data.name,
       email: data.email,
       password: data.password,
-      image:data.image,
-      phone:data.phone
+      image: data.image,
+      phone: data.phone,
     });
+if (res?.error) {
+  toast.error(res.error.message || "Registration failed ❌");
+  return;
+}
 
     if (res) {
-      toast.success( "Account created");
+      toast.success("Account created");
       navigate("/login");
     } else {
       toast.error("Registration failed ❌");
@@ -37,14 +40,14 @@ const Registation = () => {
   const signInGoogle = async () => {
     const data = await authClient.signIn.social({
       provider: "google",
-     callbackURL: "/",
+      callbackURL: "http://localhost:5173",
     });
   };
 
   const signInGitHub = async () => {
     const data = await authClient.signIn.social({
       provider: "github",
-
+      callbackURL: "http://localhost:5173",
     });
   };
 
@@ -145,7 +148,8 @@ const Registation = () => {
 
       <div className="divider p-0 m-0">or</div>
       {/* Google */}
-      <button type="button"
+      <button
+        type="button"
         onClick={signInGoogle}
         className="btn bg-white w-full text-black border-[#e5e5e5]"
       >
@@ -179,7 +183,8 @@ const Registation = () => {
         Login with Google
       </button>
 
-      <button type="button"
+      <button
+        type="button"
         onClick={signInGitHub}
         className="btn bg-black w-full text-white border-black"
       >

@@ -23,25 +23,24 @@ const Login = () => {
      toast.error('You have to registation')
     }else{
        toast.success("Login successful");
-      navigate("/");
+      navigate("/http://localhost:5173");
     }
     
   };
 
-   const signInGoogle = async () => {
-    const data = await authClient.signIn.social({
-      provider: "google",
-     
-        callbackURL: "/"
-    });
-  };
+  const signInGoogle = async () => {
+  await authClient.signIn.social({
+    provider: "google",
+    callbackURL: "http://localhost:5173/"
+  });
+};
 
-   const signInGitHub = async () => {
-    const data = await authClient.signIn.social({
-      provider: "github",
-        callbackURL: "/"
-    });
-  };
+  const signInGitHub = async () => {
+  await authClient.signIn.social({
+    provider: "github",
+    callbackURL: "http://localhost:5173/"
+  });
+};
 
   return (
     <div className="card mt-20 mx-auto p-5 bg-[#f2f2f2] hover:shadow-[0_0_20px_#42a5f5] w-80 shadow-lg">
