@@ -1,6 +1,7 @@
 import { MdOutlineAttachMoney, MdOutlineStar } from "react-icons/md";
 import { Link } from "react-router";
 import { getProductsPost } from "../../../public/ServerData/ServerData";
+import { Suspense } from "react";
 
 const AllCards = ({ products }) => {
   return (
@@ -13,11 +14,13 @@ const AllCards = ({ products }) => {
             className="card  place-items-center bg-[#edede9] p-4 rounded-3xl"
           >
             <div className="w-full h-50 aspect-square overflow-hidden">
-              <img
+             <Suspense fallback={<p>loding........</p>}>
+               <img loading="lazy"
                 src={product.image}
                 alt={product.name}
                 className="object-cover rounded-xl h-50 w-200"
               />
+             </Suspense>
             </div>
             <h1 className="text-lg font-bold">{product.name}</h1>
             <span className="flex justify-between space-x-20 font-semibold font-serif items-center">

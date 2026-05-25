@@ -9,9 +9,12 @@ import Router from "./componants/router/Router";
 import FontPage from "./componants/FontPage/FontPage";
 import Products from "./componants/products/Products";
 import Cart from "./componants/cart/Cart";
-import Profile from "./componants/profile/Profile";
+
 import ProductDetails from "./componants/products/productDetails";
 import { Toaster } from "react-hot-toast";
+import MyProfile from "./componants/(auth)/my-profile/MyProfile";
+import Login from "./componants/(auth)/login/Login";
+import Registation from "./componants/(auth)/registation/Registation";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -34,7 +37,14 @@ const router = createBrowserRouter([
    },
    { 
     path:'/profile',
-    Component:Profile
+    Component:MyProfile
+   },{
+    path:'/login',
+    element:<Login/>
+   },
+   {
+    path:'/registation',
+    element:<Registation/>
    }
     ],
   },

@@ -49,3 +49,17 @@ export const getCartProducts = async () => {
         return [];
     }
 }
+
+
+export const getCartDelete=async(id)=>{
+    try{
+const res=await fetch(`${import.meta.env.VITE_SERVER_PUBLIC_URL}/cart/${id}`,{
+    method:'DELETE'
+});
+if(!res.ok) throw new Error('Failed to fetch cart delete data')
+return res.json()
+}catch(error){
+    console.error(error)
+    return null ;
+}
+}
