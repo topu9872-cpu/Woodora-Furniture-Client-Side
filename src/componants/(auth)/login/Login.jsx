@@ -3,73 +3,119 @@ import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { Link, useNavigate } from "react-router";
 import { authClient } from "../../lib/auth-client";
 import toast from "react-hot-toast";
-
+import { useForm } from "react-hook-form";
 const Login = () => {
-   const navigate = useNavigate();
+  const navigate = useNavigate();
   const [show, setShow] = useState(false);
 
-const handleSubmit=async(e)=>{
-    e.preventDefault()
-    const formData=Object.fromEntries(new FormData(e.target))
-     const res = await authClient.signIn.email({
-      email:formData.email,
-      password:formData.password,
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const handleSubmitLogin = async (data) => {
+    // e.preventDefault();
+    //  { // const formData = Object.fromEntries(new FormData(e.target));}
+    const res = await authClient.signIn.email({
+      email: data.email,
+      password: data.password,
     });
-if(res){
-  toast.success('Login successful')
-  navigate('/')
-}
-    console.log(res);
+    if (res.error) {
+     toast.error(res.error.message || 'You have to registation')
+    }else{
+       toast.success("Login successful");
+      navigate("/");
+    }
+    
+  };
 
-}
+   const signInGoogle = async () => {
+    const data = await authClient.signIn.social({
+      provider: "google",
+    });
+  };
 
+   const signInGitHub = async () => {
+    const data = await authClient.signIn.social({
+      provider: "github",
+    });
+  };
 
   return (
     <div className="card mt-20 mx-auto p-5 bg-[#f2f2f2] hover:shadow-[0_0_20px_#42a5f5] w-80 shadow-lg">
       <h1 className="text-xl font-bold text-center mb-4">Welcome Back</h1>
 
       <div className="space-y-3">
-        <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email</label>
-          <input
-          name="email"
-            type="email"
-            placeholder="Enter Your Email"
-            className="input input-bordered w-full"
-            required
-          />
-        </div>
+        <form onSubmit={handleSubmit(handleSubmitLogin)}>
+          <div>
+            <label>Email</label>
+            <input
+              {...register("email", { required: "Email is invalid" })}
+              type="email"
+              placeholder="Enter Your Email"
+              className="input input-bordered w-full"
+            />
+            {errors.email && (
+              <p className="bg-red-100 text-red-500 text-sm text-center p-1">
+                {errors.email.message}
+              </p>
+            )}
+          </div>
 
-        <div className="relative">
-          <label>Password</label>
+          <div className="relative">
+            <label>Password</label>
 
-          <input 
-          name="password"
-            type={show ? "text" : "password"}
-            placeholder="Enter Your Password"
-            className="input input-bordered w-full pr-10"
-            required
-          />
+            <input
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 8,
+                  message: "Password must be at least 8 characters",
+                },
+                pattern: {
+                  value:
+                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                  message: "Must include uppercase, number & special character",
+                },
+              })}
+              type={show ? "text" : "password"}
+              placeholder="Enter Your Password"
+              className="input input-bordered w-full m-0 "
+            />
 
-          <span
-            onClick={() => setShow(!show)}
-            className="absolute right-3 top-9 cursor-pointer text-xl"
-          >
-            {show ? <IoMdEyeOff /> : <IoMdEye />}
-          </span>
-           <div className=" space-y-3 text-sm pt-2">
-             <p className="">forget passowrd?</p>
-          
-        
-        </div>
-        <button className="w-full btn btn-neutral my-2">Login</button>
-        <span>Don`t have an account <Link className="text-blue-500 hover:underline" to={'/registation'}>registation</Link></span>
-        </div>
+            {errors.password && (
+              <p className="text-red-500 bg-red-100 p-1 text-center text-sm">
+                {errors.password.message}
+              </p>
+            )}
+            <span
+              onClick={() => setShow(!show)}
+              className="absolute right-3 top-9 cursor-pointer text-xl"
+            >
+              {show ? <IoMdEyeOff /> : <IoMdEye />}
+            </span>
+
+            <div className=" space-y-3 text-sm pt-2">
+              <p className="">forget passowrd?</p>
+            </div>
+            <button className="btn bg-[#ea8736] text-white text-lg font-bold w-full my-2">
+              Login
+            </button>
+            <span>
+              Don`t have an account{" "}
+              <Link
+                className="text-blue-500 hover:underline"
+                to={"/registation"}
+              >
+                registation
+              </Link>
+            </span>
+          </div>
         </form>
         <div className="divider">or</div>
         {/* Google */}
-        <button className="btn bg-white w-full text-black border-[#e5e5e5]">
+        <button onClick={signInGoogle} className="btn bg-white w-full text-black border-[#e5e5e5]">
           <svg
             aria-label="Google logo"
             width="16"
@@ -100,7 +146,7 @@ if(res){
           Login with Google
         </button>
 
-        <button className="btn bg-black w-full text-white border-black">
+        <button onClick={signInGitHub} className="btn bg-black w-full text-white border-black">
           <svg
             aria-label="GitHub logo"
             width="16"
