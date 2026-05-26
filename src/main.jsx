@@ -16,6 +16,7 @@ import { Toaster } from "react-hot-toast";
 import Login from "./componants/(auth)/login/Login";
 import Registation from "./componants/(auth)/registation/Registation";
 import Profile from "./componants/profile/Profile";
+import Dashboard from "./componants/dashboard/Dashboard";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
     path:'/registation',
     element:<Registation/>
    },
+   {
+    path:'/dashboard',
+    Component:Dashboard
+   }
     ],
   },
 ]);

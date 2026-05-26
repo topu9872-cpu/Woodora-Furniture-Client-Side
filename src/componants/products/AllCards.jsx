@@ -18,7 +18,7 @@ const AllCards = ({ products }) => {
                <img loading="lazy"
                 src={product.image}
                 alt={product.name}
-                className="object-cover rounded-xl h-50 w-200"
+                className="object-cover rounded-xl h-50 w-200 hover:scale-105 transition duration-300"
               />
              </Suspense>
             </div>

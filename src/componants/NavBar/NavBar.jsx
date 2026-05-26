@@ -71,7 +71,8 @@ const NavBar = () => {
               </ul>
             </div>
           </div>
-          <a className="btn btn-ghost font-bold text-3xl">Woodora</a>
+          <Link to={'/dashboard'} className="btn ">Admin</Link>
+          <a className="btn hidden md:flex btn-ghost font-bold text-3xl">Woodora</a>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className=" p-2 menu-horizontal gap-4 border-2   border-gray-300 bg-white rounded-full  ">

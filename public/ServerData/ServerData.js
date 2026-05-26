@@ -7,6 +7,20 @@ export const getProductDetails = async (id) => {
         console.error(error)
         return null;
     }
+};
+
+// delete admin data
+export const getDeleteProducts = async (id) => {
+    try {
+        const res = await fetch(`${import.meta.env.VITE_SERVER_PUBLIC_URL}/products/${id}`,{
+            method:'DELETE'
+        })
+        if (!res.ok) throw new Error('Faild to fetch delete products data')
+        return res.json()
+    } catch (error) {
+        console.error(error)
+        return null;
+    }
 }
 
 
@@ -43,7 +57,7 @@ export const getCartProducts = async () => {
     try {
         const res = await fetch(`${import.meta.env.VITE_SERVER_PUBLIC_URL}/cart`);
         if (!res.ok) throw new Error('Faild to fetch cart data');
-     return   res.json()
+        return res.json()
     } catch (error) {
         console.error(error)
         return [];
@@ -51,15 +65,15 @@ export const getCartProducts = async () => {
 }
 
 
-export const getCartDelete=async(id)=>{
-    try{
-const res=await fetch(`${import.meta.env.VITE_SERVER_PUBLIC_URL}/cart/${id}`,{
-    method:'DELETE'
-});
-if(!res.ok) throw new Error('Failed to fetch cart delete data')
-return res.json()
-}catch(error){
-    console.error(error)
-    return null ;
-}
+export const getCartDelete = async (id) => {
+    try {
+        const res = await fetch(`${import.meta.env.VITE_SERVER_PUBLIC_URL}/cart/${id}`, {
+            method: 'DELETE'
+        });
+        if (!res.ok) throw new Error('Failed to fetch cart delete data')
+        return res.json()
+    } catch (error) {
+        console.error(error)
+        return null;
+    }
 }

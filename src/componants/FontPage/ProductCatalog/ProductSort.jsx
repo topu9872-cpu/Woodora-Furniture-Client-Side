@@ -6,14 +6,15 @@ import { getProductsSearch } from "../../../../public/ServerData/ServerData";
 const ProductSort = () => {
   const [selectedSort, setSelectedSort] = useState("all");
   const [products, setProducts] = useState([]);
-
+console.log(products)
   const categories = [
     { id: "all", label: "All" },
-    { id: "Living Room", label: "Living Room" },
-    { id: "Bedroom", label: "Bedroom" },
-    { id: "Office", label: "Office" },
+    { id: "living-room", label: "Living Room" },
+    { id: "bedroom", label: "Bedroom" },
+    { id: "office", label: "Office" },
    
   ];
+
 
   useMemo(() => {
     const handleProductData = async () => {
