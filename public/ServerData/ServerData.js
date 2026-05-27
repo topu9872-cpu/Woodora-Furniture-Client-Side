@@ -12,8 +12,8 @@ export const getProductDetails = async (id) => {
 // delete admin data
 export const getDeleteProducts = async (id) => {
     try {
-        const res = await fetch(`${import.meta.env.VITE_SERVER_PUBLIC_URL}/products/${id}`,{
-            method:'DELETE'
+        const res = await fetch(`${import.meta.env.VITE_SERVER_PUBLIC_URL}/products/${id}`, {
+            method: 'DELETE'
         })
         if (!res.ok) throw new Error('Faild to fetch delete products data')
         return res.json()
@@ -21,6 +21,28 @@ export const getDeleteProducts = async (id) => {
         console.error(error)
         return null;
     }
+};
+
+
+// edit admin data
+
+export const getEditProduct = async (id, data) => {
+    try {
+        const res = await fetch(`${import.meta.env.VITE_SERVER_PUBLIC_URL}/products/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(data)
+
+        })
+        if (!res.ok) throw new Error('faild to fetch admin edit data');
+        return res.json();
+    } catch (error) {
+        console.error(error)
+        return null
+    }
+
 }
 
 
