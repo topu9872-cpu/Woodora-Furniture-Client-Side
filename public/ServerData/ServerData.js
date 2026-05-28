@@ -1,3 +1,5 @@
+import { authClient } from "../../src/componants/lib/auth-client";
+
 export const getProductDetails = async (id) => {
     try {
         const res = await fetch(`${import.meta.env.VITE_SERVER_PUBLIC_URL}/products/${id}`)
@@ -47,8 +49,11 @@ export const getEditProduct = async (id, data) => {
 
 
 export const getProductsSearch = async (search = '') => {
+   
     try {
-        const res = await fetch(`${import.meta.env.VITE_SERVER_PUBLIC_URL}/products?search=${search}`)
+        const res = await fetch(`${import.meta.env.VITE_SERVER_PUBLIC_URL}/products?search=${search}`, {
+          
+        })
         if (!res.ok) throw new Error('Faild to fetch products search data')
         return res.json();
     } catch (error) {
@@ -59,11 +64,16 @@ export const getProductsSearch = async (search = '') => {
 
 
 export const getProductsPost = async (booking) => {
+
+     const { data } = await authClient.token()
+    const token = data?.token;
+    
     try {
         const res = await fetch(`${import.meta.env.VITE_SERVER_PUBLIC_URL}/cart`, {
             method: 'POST',
             headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                 Authorization: `Bearer ${token}`
             },
             body: JSON.stringify(booking)
         });
