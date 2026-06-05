@@ -7,9 +7,9 @@ export const authClient = createAuthClient({
     credentials: "include",
   },
 
-  plugins:[
-    jwtClient()
-  ]
+  // plugins:[
+  //   jwtClient()
+  // ]
 });
 
 export const signIn = authClient.signIn;

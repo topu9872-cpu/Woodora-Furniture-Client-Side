@@ -5,7 +5,7 @@ import { authClient } from "../../lib/auth-client";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 
-const Registation = () => {
+const Registration = () => {
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
 
@@ -23,6 +23,8 @@ const Registation = () => {
       image: data.image,
       phone: data.phone,
     });
+    console.log( handleSubmit)
+    console.log( res)
 if (res?.error) {
   toast.error(res.error.message || "Registration failed ❌");
   return;
@@ -206,4 +208,4 @@ if (res?.error) {
   );
 };
 
-export default Registation;
+export default Registration;

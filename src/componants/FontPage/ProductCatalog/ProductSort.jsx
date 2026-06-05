@@ -6,21 +6,18 @@ import { getProductsSearch } from "../../../../public/ServerData/ServerData";
 const ProductSort = () => {
   const [selectedSort, setSelectedSort] = useState("all");
   const [products, setProducts] = useState([]);
-console.log(products)
+
   const categories = [
     { id: "all", label: "All" },
     { id: "living-room", label: "Living Room" },
     { id: "bedroom", label: "Bedroom" },
     { id: "office", label: "Office" },
-   
   ];
-
 
   useMemo(() => {
     const handleProductData = async () => {
       const ProductsData = await getProductsSearch();
       setProducts(ProductsData);
-      
     };
     handleProductData();
   }, []);
@@ -53,7 +50,11 @@ console.log(products)
             key={product._id}
             className="aspect-square overflow-hidden rounded-2xl "
           >
-            <Suspense fallback={<span className="loading loading-spinner text-accent"></span>}>
+            <Suspense
+              fallback={
+                <span className="loading loading-spinner text-accent"></span>
+              }
+            >
               <img
                 src={product?.image}
                 alt={product.name}

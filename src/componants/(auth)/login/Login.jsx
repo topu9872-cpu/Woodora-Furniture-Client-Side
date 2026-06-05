@@ -18,27 +18,30 @@ const Login = () => {
     const res = await authClient.signIn.email({
       email: data.email,
       password: data.password,
+      callbackURL:'/'
     });
+    console.log(res)
     if (res.error) {
      toast.error('You have to registation')
+       console.error(error)
     }else{
        toast.success("Login successful");
       navigate("/http://localhost:5173");
     }
-    
+  
   };
 
   const signInGoogle = async () => {
   await authClient.signIn.social({
     provider: "google",
-    callbackURL: "http://localhost:5173/"
+    callbackURL: "http://localhost:5173"
   });
 };
 
   const signInGitHub = async () => {
   await authClient.signIn.social({
     provider: "github",
-    callbackURL: "http://localhost:5173/"
+    callbackURL: "http://localhost:5173"
   });
 };
 

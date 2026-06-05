@@ -1,107 +1,162 @@
+"use client";
+
 import { Button, Input, Label, Modal, Surface, TextField } from "@heroui/react";
 import { authClient } from "../lib/auth-client";
 import toast from "react-hot-toast";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ProfileEdit = ({ user }) => {
-  const [image, setImage] = useState(null);
-  console.log(image);
-const handleUpdateProfile = async (e) => {
-  e.preventDefault();
-
-  const formData = Object.fromEntries(new FormData(e.target));
-
-  const data = await authClient.updateUser({
-    name: formData.name,
-    phone: formData.phone,
-    location: formData.location,
-    image:image, 
+  const [form, setForm] = useState({
+    name: "",
+    phone: "",
+    location: "",
   });
 
-  if (data) toast.success("updated profile!");
-  console.log(data)
-};
+  const [imageFile, setImageFile] = useState(null);
+  const [preview, setPreview] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      setForm({
+        name: user.name || "",
+        phone: user.phone || "",
+        location: user.location || "",
+      });
+
+      setPreview(user.image || null);
+      setImageFile(null);
+    }
+  }, [user]);
+
+  const handleChange = (key, value) => {
+    setForm((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+
+  const uploadImage = async (file) => {
+    const formData = new FormData();
+    formData.append("image", file);
+
+    const res = await fetch(
+      `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_KEY}`,
+      {
+        method: "POST",
+        body: formData,
+      },
+    );
+
+    const data = await res.json();
+
+    if (!data.success) {
+      throw new Error(data.error?.message || "Image upload failed");
+    }
+
+    return data.data.display_url;
+  };
+
+  const handleUpdateProfile = async (e) => {
+    e.preventDefault();
+
+    try {
+      setLoading(true);
+
+      let imageUrl = user.image;
+
+      if (imageFile) {
+        imageUrl = await uploadImage(imageFile);
+      }
+
+      const res = await authClient.updateUser({
+        name: form.name,
+        phone: form.phone,
+        location: form.location,
+        image: imageUrl,
+      });
+    } catch (err) {
+      toast.error(err.message || "Update failed!");
+    } finally {
+      setLoading(false);
+      toast.success("Profile updated!");
+      setTimeout(()=>{
+        window.location.reload()
+      },500)
+    }
+  };
 
   return (
-    <div>
-      <Modal>
-        <Button className="flex-1 btn btn-primary py-2  font-bold text-lg rounded-lg transition">
-          Edit Profile
-        </Button>
+    <Modal>
+      <Button className="btn btn-primary font-bold">Edit Profile</Button>
 
-        <Modal.Backdrop>
-          <Modal.Container placement="auto">
-            <Modal.Dialog className="sm:max-w-md">
-              <Modal.CloseTrigger />
-              <Modal.Header>
-                <Modal.Heading className="text-center text-lg ">
-                  Profile Update
-                </Modal.Heading>
-              </Modal.Header>
-              <Modal.Body className="p-6 mt-6">
-                <Surface>
-                  <form
-                    onSubmit={handleUpdateProfile}
-                    className="flex flex-col gap-4"
-                  >
-                    <TextField
-                      
-                      className="w-full"
-                      type="text"
-                      variant="secondary"
-                      defaultValue={user?.name}
-                    >
-                      <Label>Name</Label>
-                      <Input name="name" placeholder="Enter your name" />
-                    </TextField>
-                    <TextField
-                      className="w-full"
-                      name="image"
-                      variant="secondary"
-                    >
-                      <Label>Image</Label>
-                      <Input
-                         name="image"
-                        onChange={(e) => setImage(e.target.files[0])}
-                        type="file"
-                        placeholder="Enter your Image"
-                      />
-                    </TextField>
-                    <TextField
-                      className="w-full"
-                     
-                      type="tel"
-                      variant="secondary"
-                      defaultValue={user?.phone}
-                    >
-                      <Label>Phone</Label>
-                      <Input  name="phone" placeholder="Enter your phone number" />
-                    </TextField>
-                    <TextField
-                      className="w-full"
-                     
-                      variant="secondary"
-                      placeholder="Enter your location"
-                      defaultValue={user?.location}
-                    >
-                      <Label>Location</Label>
-                      <Input  name="location" type="text" />
-                    </TextField>
+      <Modal.Backdrop>
+        <Modal.Container placement="auto">
+          <Modal.Dialog className="sm:max-w-md">
+            <Modal.CloseTrigger />
 
-                    <Modal.Footer>
-                      <Button slot="close" variant="secondary">
-                        Cancel
-                      </Button>
-                      <Button type="submit">Update Profile</Button>
-                    </Modal.Footer>
-                  </form>
-                </Surface>
-              </Modal.Body>
-            </Modal.Dialog>
-          </Modal.Container>
-        </Modal.Backdrop>
-      </Modal>
-    </div>
+            <Modal.Header>
+              <Modal.Heading className="text-center">
+                Update Profile
+              </Modal.Heading>
+            </Modal.Header>
+
+            <Modal.Body>
+              <Surface>
+                <form
+                  onSubmit={handleUpdateProfile}
+                  className="flex flex-col gap-4"
+                >
+                  <TextField>
+                    <Label>Name</Label>
+                    <Input
+                      value={form.name}
+                      onChange={(e) => handleChange("name", e.target.value)}
+                    />
+                  </TextField>
+
+                  <TextField>
+                    <Label>Phone</Label>
+                    <Input
+                      value={form.phone}
+                      onChange={(e) => handleChange("phone", e.target.value)}
+                    />
+                  </TextField>
+
+                  <TextField>
+                    <Label>Location</Label>
+                    <Input
+                      value={form.location}
+                      onChange={(e) => handleChange("location", e.target.value)}
+                    />
+                  </TextField>
+
+                  <TextField>
+                    <Label>Image</Label>
+                    <input
+                      className="border border-gray-300 rounded p-2.5 w-xs"
+                      type="file"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+
+                        if (file instanceof File) {
+                          setImageFile(file);
+                          setPreview(URL.createObjectURL(file));
+                        }
+                      }}
+                    />
+                  </TextField>
+
+                  <Button type="submit" disabled={loading}>
+                    {loading ? "Updating..." : "Update Profile"}
+                  </Button>
+                </form>
+              </Surface>
+            </Modal.Body>
+          </Modal.Dialog>
+        </Modal.Container>
+      </Modal.Backdrop>
+    </Modal>
   );
 };
 

@@ -1,8 +1,9 @@
 import React from "react";
 import RouterNavLink from "./RouterNavLink";
-import { authClient } from "../lib/auth-client";
+
 import { useNavigate } from "react-router";
 import { Link } from "react-router";
+import { authClient } from "../lib/auth-client";
 
 const NavBar = () => {
   const NavData = (
@@ -29,6 +30,7 @@ const NavBar = () => {
   const user = session?.user;
 
   const handleLogout = async () => {
+
     await authClient.signOut({
       fetchOptions: {
         onSuccess: () => {
