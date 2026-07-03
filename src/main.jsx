@@ -18,6 +18,12 @@ import Login from "./componants/(auth)/login/Login";
 import Profile from "./componants/profile/Profile";
 import Dashboard from "./componants/dashboard/Dashboard";
 import Registration from "./componants/(auth)/registration/Registration";
+
+import Customers from "./componants/dashboard/customers";
+import DashboardLayout from "./componants/dashboard/DashboardLayout";
+import ControlProducts from "./componants/dashboard/control-products";
+import Orders from "./componants/dashboard/orders";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -25,46 +31,61 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element:<FontPage/>,
+        element: <FontPage />,
       },
-    {
-      path:'/products',
-          Component:Products
-    },{
-      path:'/products/:id',
-      element:<ProductDetails/>
-    },
-   { 
-    path:'/cart',
-    Component:Cart
-   },
-   { 
-    path:'/profile',
-    Component:Profile
-   },{
-    path:'/login',
-    element:<Login/>
-   },
-   {
-    path:'/registration',
-    element:<Registration/>
-   },
-   {
-    path:'/dashboard',
-    Component:Dashboard
-   }
+      {
+        path: "/products",
+        Component: Products,
+      },
+      {
+        path: "/products/:id",
+        element: <ProductDetails />,
+      },
+      {
+        path: "/cart",
+        Component: Cart,
+      },
+      {
+        path: "/profile",
+        Component: Profile,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/registration",
+        element: <Registration />,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    Component: DashboardLayout,
+    children: [
+      {
+        index: true,
+        element: <Dashboard />,
+      },
+      {
+        path: "control-products",
+        element: <ControlProducts/>,
+      },
+      {
+        path: "orders",
+        element: <Orders/>,
+      },
+      {
+        path: "customers",
+        element: <Customers />,
+      },
     ],
   },
 ]);
 
-
-
-
-
-
 createRoot(document.getElementById("root")).render(
-  <StrictMode >
+  <StrictMode>
     <Toaster />
-   <RouterProvider router={router}/>
+    <RouterProvider router={router} />
   </StrictMode>,
 );

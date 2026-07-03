@@ -11,7 +11,6 @@ const NavBar = () => {
   const user = session?.user;
 
   const [dbUser, setDbUser] = useState(null);
-console.log(dbUser)
   useEffect(() => {
     const fetchUser = async () => {
       if (!user?.email) return;

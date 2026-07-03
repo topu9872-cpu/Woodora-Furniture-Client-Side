@@ -95,6 +95,17 @@ export const getCartProducts = async () => {
         return [];
     }
 }
+export const getCustomarsCartProducts = async (email) => {
+   
+    try {
+        const res = await fetch(`${import.meta.env.VITE_SERVER_PUBLIC_URL}/customars-cart/${email}`);
+        if (!res.ok) throw new Error('Faild to fetch cart data');
+        return res.json()
+    } catch (error) {
+        console.error(error)
+        return [];
+    }
+}
 
 
 export const getCartDelete = async (id) => {
@@ -116,6 +127,19 @@ export const getUsers = async (email) => {
     try {
         const res = await fetch(`${import.meta.env.VITE_SERVER_PUBLIC_URL}/user/${email}`);
         if (!res.ok) throw new Error('Faild to fetch user data');
+        return res.json()
+    } catch (error) {
+        console.error(error)
+        return [];
+    }
+}
+
+
+export const getAllUsers = async () => {
+    
+    try {
+        const res = await fetch(`${import.meta.env.VITE_SERVER_PUBLIC_URL}/user`);
+        if (!res.ok) throw new Error('Faild to fetch all user data');
         return res.json()
     } catch (error) {
         console.error(error)

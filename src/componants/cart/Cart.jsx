@@ -1,23 +1,38 @@
 
 
 
-import { getCartDelete, getCartProducts } from "../../../public/ServerData/ServerData";
+import { getCartDelete, getCustomarsCartProducts } from "../../../public/ServerData/ServerData";
 import { useEffect, useState } from "react";
 import { Link} from "react-router";
 import toast from "react-hot-toast";
 import DeleteCart from "./DeleteCart";
+import { authClient } from "../lib/auth-client";
 
 const Cart = () => {
-  const [cart, setCart] = useState([]);
+  const { data: session, isPending } = authClient.useSession();
+const user = session?.user;
 
-  useEffect(() => {
-    const handleCart = async () => {
-      const cartData = await getCartProducts();
+const [cart, setCart] = useState([]);
+
+useEffect(() => {
+  if (isPending) return;
+  if (!user?.email) return;
+
+  const handleCart = async () => {
+    try {
+      const cartData = await getCustomarsCartProducts(user.email);
       setCart(cartData);
-    };
-    handleCart();
-  }, []);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
+  handleCart();
+}, [isPending, user?.email]);
+
+if(!cart || isPending){
+  return <div>no add to cart</div>
+}
 
   return (
     <div className="bg-[#f8f5f0] min-h-screen py-10">
@@ -26,7 +41,7 @@ const Cart = () => {
           <div>
             <h1 className="text-4xl font-bold text-[#2c2c2c]">Shopping Cart</h1>
             <p className="text-gray-500 mt-2">
-              {cart.length} item{cart.length !== 1 && "s"} in your cart
+              {cart.length} item{cart.length !== 1} in your cart
             </p>
           </div>
 

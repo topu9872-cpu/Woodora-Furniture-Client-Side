@@ -5,14 +5,21 @@ import {
 } from "../../../public/ServerData/ServerData";
 import { useParams } from "react-router";
 import toast from "react-hot-toast";
+import { authClient } from "../lib/auth-client";
 
 const ProductDetails = () => {
+    const { data: session, isPending } = authClient.useSession();
+    const user = session?.user;
+console.log(user)
+
   const { id } = useParams();
   const [details, setDetails] = useState(null);
 
   const [, setPost] = useState([]);
 
   const handleBookingItems = async () => {
+
+   
     const booking = {
       productId: details._id,
       name: details.name,
@@ -22,6 +29,7 @@ const ProductDetails = () => {
       color: details.color,
       material: details.material,
       description: details.description,
+      email:user?.email
     };
 
     const cart = await getProductsPost(booking);
