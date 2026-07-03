@@ -109,3 +109,16 @@ export const getCartDelete = async (id) => {
         return null;
     }
 }
+
+
+export const getUsers = async (email) => {
+    
+    try {
+        const res = await fetch(`${import.meta.env.VITE_SERVER_PUBLIC_URL}/user/${email}`);
+        if (!res.ok) throw new Error('Faild to fetch user data');
+        return res.json()
+    } catch (error) {
+        console.error(error)
+        return [];
+    }
+}

@@ -37,7 +37,7 @@ const DeleteBtn = ({product}) => {
                 Cancel
               </Button>
               <Button onClick={()=>handleDelete(product._id)} variant="danger">
-                Delete Project
+                Delete
               </Button>
             </AlertDialog.Footer>
           </AlertDialog.Dialog>

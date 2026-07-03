@@ -42,7 +42,7 @@ const DeleteCart = ({ c, setCart }) => {
                   slot="close"
                   variant="danger"
                 >
-                  Delete Project
+                  Delete
                 </Button>
               </AlertDialog.Footer>
             </AlertDialog.Dialog>
