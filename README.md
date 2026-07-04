@@ -142,19 +142,6 @@ npm run preview
 
 ---
 
-# ⚙ Environment Variables
-
-Create a `.env` file in the project root.
-
-```env
-VITE_API_URL=http://localhost:5000
-
-VITE_BETTER_AUTH_URL=http://localhost:5000
-
-VITE_UPLOADTHING_TOKEN=your_token
-```
-
----
 
 # 📄 Pages
 

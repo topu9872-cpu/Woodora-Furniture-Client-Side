@@ -18,33 +18,31 @@ const Login = () => {
     const res = await authClient.signIn.email({
       email: data.email,
       password: data.password,
-      callbackURL:'/'
+     
     });
-    console.log(res)
     if (res.error) {
      toast.error('You have to registation')
        console.error(error)
     }else{
        toast.success("Login successful");
-      navigate("/http://localhost:5173");
+      navigate('/');
     }
   
   };
 
-  const signInGoogle = async () => {
+const signInGoogle = async () => {
   await authClient.signIn.social({
     provider: "google",
-    callbackURL: "http://localhost:5173"
+    callbackURL:'/',
   });
 };
 
-  const signInGitHub = async () => {
+const signInGitHub = async () => {
   await authClient.signIn.social({
     provider: "github",
-    callbackURL: "http://localhost:5173"
+    callbackURL:'/',
   });
 };
-
   return (
     <div className="card mt-20 mx-auto p-5 bg-[#f2f2f2] hover:shadow-[0_0_20px_#42a5f5] w-80 shadow-lg">
       <h1 className="text-xl font-bold text-center mb-4">Welcome Back</h1>
@@ -109,9 +107,9 @@ const Login = () => {
               Don`t have an account{" "}
               <Link
                 className="text-blue-500 hover:underline"
-                to={"/registration"}
+                to={"/registation "}
               >
-                registration
+                Registation 
               </Link>
             </span>
           </div>

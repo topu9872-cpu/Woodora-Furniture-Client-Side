@@ -5,7 +5,7 @@ import { authClient } from "../../lib/auth-client";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 
-const Registration = () => {
+const Registation = () => {
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
 
@@ -26,7 +26,7 @@ const Registration = () => {
     console.log( handleSubmit)
     console.log( res)
 if (res?.error) {
-  toast.error(res.error.message || "Registration failed ❌");
+  toast.error(res.error.message || "Registation failed ❌");
   return;
 }
 
@@ -34,28 +34,26 @@ if (res?.error) {
       toast.success("Account created");
       navigate("/login");
     } else {
-      toast.error("Registration failed ❌");
+      toast.error("Registation failed ❌");
       console.log(error);
     }
   };
+const signInGoogle = async () => {
+  await authClient.signIn.social({
+    provider: "google",
+    callbackURL:'https://woodora-furniture-client-side.vercel.app',
+  });
+};
 
-  const signInGoogle = async () => {
-    const data = await authClient.signIn.social({
-      provider: "google",
-      callbackURL: "http://localhost:5173",
-    });
-  };
-
-  const signInGitHub = async () => {
-    const data = await authClient.signIn.social({
-      provider: "github",
-      callbackURL: "http://localhost:5173",
-    });
-  };
-
+const signInGitHub = async () => {
+  await authClient.signIn.social({
+    provider: "github",
+    callbackURL:'https://woodora-furniture-client-side.vercel.app',
+  });
+};
   return (
     <div className="card mt-20 mx-auto p-5 bg-[#f2f2f2] w-100 shadow-lg">
-      <h1 className="text-xl font-bold text-center mb-4">Registration</h1>
+      <h1 className="text-xl font-bold text-center mb-4">Registation</h1>
 
       <form onSubmit={handleSubmit(handleSubmitSingup)} className="space-y-3">
         <input
@@ -208,4 +206,4 @@ if (res?.error) {
   );
 };
 
-export default Registration;
+export default Registation;

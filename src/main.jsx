@@ -17,12 +17,13 @@ import Login from "./componants/(auth)/login/Login";
 
 import Profile from "./componants/profile/Profile";
 import Dashboard from "./componants/dashboard/Dashboard";
-import Registration from "./componants/(auth)/registration/Registration";
+
 
 import Customers from "./componants/dashboard/customers";
 import DashboardLayout from "./componants/dashboard/DashboardLayout";
 import ControlProducts from "./componants/dashboard/control-products";
 import Orders from "./componants/dashboard/orders";
+import Registation from "./componants/(auth)/registation/Registation";
 
 const router = createBrowserRouter([
   {
@@ -54,8 +55,8 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: "/registration",
-        element: <Registration />,
+        path: "/registation ",
+        element: <Registation />,
       },
     ],
   },
