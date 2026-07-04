@@ -1,5 +1,15 @@
 import { authClient } from "../../src/componants/lib/auth-client";
 
+// Helper to get auth headers for protected routes
+const getAuthHeaders = async () => {
+    const { data } = await authClient.token();
+    const token = data?.token;
+    return {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+    };
+};
+
 export const getProductDetails = async (id) => {
     try {
         const res = await fetch(`${import.meta.env.VITE_SERVER_PUBLIC_URL}/products/${id}`)
@@ -14,8 +24,10 @@ export const getProductDetails = async (id) => {
 // delete admin data
 export const getDeleteProducts = async (id) => {
     try {
+        const headers = await getAuthHeaders();
         const res = await fetch(`${import.meta.env.VITE_SERVER_PUBLIC_URL}/products/${id}`, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers,
         })
         if (!res.ok) throw new Error('Faild to fetch delete products data')
         return res.json()
@@ -30,11 +42,10 @@ export const getDeleteProducts = async (id) => {
 
 export const getEditProduct = async (id, data) => {
     try {
+        const headers = await getAuthHeaders();
         const res = await fetch(`${import.meta.env.VITE_SERVER_PUBLIC_URL}/products/${id}`, {
             method: 'PATCH',
-            headers: {
-                'content-type': 'application/json'
-            },
+            headers,
             body: JSON.stringify(data)
 
         })
@@ -65,16 +76,11 @@ export const getProductsSearch = async (search = '') => {
 
 export const getProductsPost = async (booking) => {
 
-     const { data } = await authClient.token()
-    const token = data?.token;
-    
     try {
+        const headers = await getAuthHeaders();
         const res = await fetch(`${import.meta.env.VITE_SERVER_PUBLIC_URL}/cart`, {
             method: 'POST',
-            headers: {
-                'content-type': 'application/json',
-                 Authorization: `Bearer ${token}`
-            },
+            headers,
             body: JSON.stringify(booking)
         });
         if (!res.ok) throw new Error('failed to fetch products POST data')
@@ -87,7 +93,10 @@ export const getProductsPost = async (booking) => {
 
 export const getCartProducts = async () => {
     try {
-        const res = await fetch(`${import.meta.env.VITE_SERVER_PUBLIC_URL}/cart`);
+        const headers = await getAuthHeaders();
+        const res = await fetch(`${import.meta.env.VITE_SERVER_PUBLIC_URL}/cart`, {
+            headers,
+        });
         if (!res.ok) throw new Error('Faild to fetch cart data');
         return res.json()
     } catch (error) {
@@ -98,7 +107,10 @@ export const getCartProducts = async () => {
 export const getCustomarsCartProducts = async (email) => {
    
     try {
-        const res = await fetch(`${import.meta.env.VITE_SERVER_PUBLIC_URL}/customars-cart/${email}`);
+        const headers = await getAuthHeaders();
+        const res = await fetch(`${import.meta.env.VITE_SERVER_PUBLIC_URL}/customars-cart/${email}`, {
+            headers,
+        });
         if (!res.ok) throw new Error('Faild to fetch cart data');
         return res.json()
     } catch (error) {
@@ -110,8 +122,10 @@ export const getCustomarsCartProducts = async (email) => {
 
 export const getCartDelete = async (id) => {
     try {
+        const headers = await getAuthHeaders();
         const res = await fetch(`${import.meta.env.VITE_SERVER_PUBLIC_URL}/cart/${id}`, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers,
         });
         if (!res.ok) throw new Error('Failed to fetch cart delete data')
         return res.json()
@@ -125,7 +139,10 @@ export const getCartDelete = async (id) => {
 export const getUsers = async (email) => {
     
     try {
-        const res = await fetch(`${import.meta.env.VITE_SERVER_PUBLIC_URL}/user/${email}`);
+        const headers = await getAuthHeaders();
+        const res = await fetch(`${import.meta.env.VITE_SERVER_PUBLIC_URL}/user/${email}`, {
+            headers,
+        });
         if (!res.ok) throw new Error('Faild to fetch user data');
         return res.json()
     } catch (error) {
@@ -138,7 +155,10 @@ export const getUsers = async (email) => {
 export const getAllUsers = async () => {
     
     try {
-        const res = await fetch(`${import.meta.env.VITE_SERVER_PUBLIC_URL}/user`);
+        const headers = await getAuthHeaders();
+        const res = await fetch(`${import.meta.env.VITE_SERVER_PUBLIC_URL}/user`, {
+            headers,
+        });
         if (!res.ok) throw new Error('Faild to fetch all user data');
         return res.json()
     } catch (error) {

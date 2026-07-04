@@ -18,33 +18,35 @@ const Login = () => {
     const res = await authClient.signIn.email({
       email: data.email,
       password: data.password,
-     
     });
     if (res.error) {
-     toast.error('You have to registation')
-       console.error(error)
-    }else{
-       toast.success("Login successful");
-      navigate('/');
+      toast.error(res.error.message || "Login failed");
+      console.error(res.error);
+      return;
     }
-  
+
+    toast.success("Login successful");
+    navigate("/");
   };
 
-const signInGoogle = async () => {
-  await authClient.signIn.social({
-    provider: "google",
-    callbackURL:'/',
-  });
-};
+  const frontendURL =
+    import.meta.env.VITE_APP_URL ?? window.location.origin;
 
-const signInGitHub = async () => {
-  await authClient.signIn.social({
-    provider: "github",
-    callbackURL:'/',
-  });
-};
+  const signInGoogle = async () => {
+    await authClient.signIn.social({
+      provider: "google",
+      callbackURL: `${frontendURL}/`,
+    });
+  };
+
+  const signInGitHub = async () => {
+    await authClient.signIn.social({
+      provider: "github",
+      callbackURL: `${frontendURL}/`,
+    });
+  };
   return (
-    <div className="card mt-20 mx-auto p-5 bg-[#f2f2f2] hover:shadow-[0_0_20px_#42a5f5] w-80 shadow-lg">
+    <div className="card mt-20 mx-auto p-5 bg-[#f2f2f2] hover:shadow-[0_0_20px_#42a5f5] w-90 shadow-lg">
       <h1 className="text-xl font-bold text-center mb-4">Welcome Back</h1>
 
       <div className="space-y-3">
@@ -107,16 +109,19 @@ const signInGitHub = async () => {
               Don`t have an account{" "}
               <Link
                 className="text-blue-500 hover:underline"
-                to={"/registation "}
+                to={"/registration"}
               >
-                Registation 
+                Registation
               </Link>
             </span>
           </div>
         </form>
         <div className="divider">or</div>
         {/* Google */}
-        <button onClick={signInGoogle} className="btn bg-white w-full text-black border-[#e5e5e5]">
+        <button
+          onClick={signInGoogle}
+          className="btn bg-white w-full text-black border-[#e5e5e5]"
+        >
           <svg
             aria-label="Google logo"
             width="16"
@@ -147,7 +152,10 @@ const signInGitHub = async () => {
           Login with Google
         </button>
 
-        <button onClick={signInGitHub} className="btn bg-black w-full text-white border-black">
+        <button
+          onClick={signInGitHub}
+          className="btn bg-black w-full text-white border-black"
+        >
           <svg
             aria-label="GitHub logo"
             width="16"

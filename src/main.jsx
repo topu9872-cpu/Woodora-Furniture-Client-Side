@@ -23,7 +23,9 @@ import Customers from "./componants/dashboard/customers";
 import DashboardLayout from "./componants/dashboard/DashboardLayout";
 import ControlProducts from "./componants/dashboard/control-products";
 import Orders from "./componants/dashboard/orders";
-import Registation from "./componants/(auth)/registation/Registation";
+import Registation from "./componants/(auth)/registration/Registation";
+import Unauthorized from "./componants/unauthorized/Unauthorized";
+
 
 const router = createBrowserRouter([
   {
@@ -55,8 +57,8 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: "/registation ",
-        element: <Registation />,
+        path: "/registration",
+        element: <Registation/>,
       },
     ],
   },
@@ -79,6 +81,10 @@ const router = createBrowserRouter([
       {
         path: "customers",
         element: <Customers />,
+      },
+      {
+        path: "unauthorized",
+        element: < Unauthorized />,
       },
     ],
   },

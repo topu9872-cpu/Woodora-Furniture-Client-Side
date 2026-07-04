@@ -1,12 +1,20 @@
 import React from "react";
 import { authClient } from "../lib/auth-client";
-import { useNavigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
 import ProfileEdit from "./ProfileEdit";
 
 const Profile = () => {
   const router = useNavigate();
-  const { data: session } = authClient.useSession();
+  const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
+
+  if (isPending) {
+    return <div className="p-6 text-center">Loading...</div>;
+  }
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
 
   const handleLogout = async () => {
     await authClient.signOut({

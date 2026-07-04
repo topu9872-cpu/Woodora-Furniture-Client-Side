@@ -3,36 +3,50 @@
 
 import { getCartDelete, getCustomarsCartProducts } from "../../../public/ServerData/ServerData";
 import { useEffect, useState } from "react";
-import { Link} from "react-router";
+import { Link, Navigate } from "react-router";
 import toast from "react-hot-toast";
 import DeleteCart from "./DeleteCart";
 import { authClient } from "../lib/auth-client";
 
 const Cart = () => {
   const { data: session, isPending } = authClient.useSession();
-const user = session?.user;
+  const user = session?.user;
 
-const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState([]);
+  const [cartLoading, setCartLoading] = useState(true);
 
-useEffect(() => {
-  if (isPending) return;
-  if (!user?.email) return;
-
-  const handleCart = async () => {
-    try {
-      const cartData = await getCustomarsCartProducts(user.email);
-      setCart(cartData);
-    } catch (error) {
-      console.error(error);
+  useEffect(() => {
+    if (isPending) return;
+    if (!user?.email) {
+      setCartLoading(false);
+      return;
     }
-  };
 
-  handleCart();
-}, [isPending, user?.email]);
+    const handleCart = async () => {
+      try {
+        const cartData = await getCustomarsCartProducts(user.email);
+        setCart(cartData ?? []);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setCartLoading(false);
+      }
+    };
 
-if(!cart || isPending){
-  return <div>no add to cart</div>
-}
+    handleCart();
+  }, [isPending, user?.email]);
+
+  if (isPending || cartLoading) {
+    return <div className="p-6 text-center">Loading...</div>;
+  }
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (!cart.length) {
+    return <div className="p-6 text-center">No items in cart</div>;
+  }
 
   return (
     <div className="bg-[#f8f5f0] min-h-screen py-10">

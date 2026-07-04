@@ -23,34 +23,35 @@ const Registation = () => {
       image: data.image,
       phone: data.phone,
     });
-    console.log( handleSubmit)
-    console.log( res)
-if (res?.error) {
-  toast.error(res.error.message || "Registation failed ❌");
-  return;
-}
+
+    if (res?.error) {
+      toast.error(res.error.message || "Registation failed ");
+      return;
+    }
 
     if (res) {
       toast.success("Account created");
       navigate("/login");
     } else {
-      toast.error("Registation failed ❌");
-      console.log(error);
+      toast.error("Registation failed ");
     }
   };
-const signInGoogle = async () => {
-  await authClient.signIn.social({
-    provider: "google",
-    callbackURL:'https://woodora-furniture-client-side.vercel.app',
-  });
-};
+  const frontendURL =
+    import.meta.env.VITE_APP_URL ?? window.location.origin;
 
-const signInGitHub = async () => {
-  await authClient.signIn.social({
-    provider: "github",
-    callbackURL:'https://woodora-furniture-client-side.vercel.app',
-  });
-};
+  const signInGoogle = async () => {
+    await authClient.signIn.social({
+      provider: "google",
+      callbackURL: `${frontendURL}/`,
+    });
+  };
+
+  const signInGitHub = async () => {
+    await authClient.signIn.social({
+      provider: "github",
+      callbackURL: `${frontendURL}/`,
+    });
+  };
   return (
     <div className="card mt-20 mx-auto p-5 bg-[#f2f2f2] w-100 shadow-lg">
       <h1 className="text-xl font-bold text-center mb-4">Registation</h1>

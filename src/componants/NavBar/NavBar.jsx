@@ -139,7 +139,7 @@ const NavBar = () => {
               </Link>
 
               <Link
-                to="/registation"
+                to="/registration"
                 className="btn bg-[#b6845c] font-bold text-white"
               >
                 Registration
