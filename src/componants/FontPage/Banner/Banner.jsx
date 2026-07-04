@@ -5,7 +5,7 @@ const Banner = () => {
   return (
     <div className="relative  top-0"
       style={{
-      backgroundImage:"url('src/assets/alyssa-hurley-yekIZ4ltv1o-unsplash.jpg')"
+      backgroundImage:"url('/assets/alyssa-hurley-yekIZ4ltv1o-unsplash.jpg')"
     }}>
     <div className="w-11/12  mx-auto py-20 "
   

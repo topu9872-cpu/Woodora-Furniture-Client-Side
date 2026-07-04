@@ -1,16 +1,278 @@
-# React + Vite
+# Woodora Furniture Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern and responsive furniture e-commerce web application built with **React.js** and **Vite**. Woodora offers a premium shopping experience with elegant UI, secure authentication, an admin dashboard, and complete product management.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+# 🚀 Live Demo
 
-## React Compiler
+**Frontend:** https://your-frontend-url.vercel.app
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Backend API:** https://your-backend-url.onrender.com
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# ✨ Features
+
+### 👤 Authentication
+
+* Secure Authentication using Better Auth
+* User Registration
+* User Login
+* Logout
+* Protected Routes
+* User Profile
+
+---
+
+### 🛍 Shopping
+
+* Browse Products
+* Product Details
+* Add to Cart
+* Remove from Cart
+* Shopping Cart
+* Checkout UI
+
+---
+
+### 📦 Admin Dashboard
+
+* Dashboard Overview
+* Product Management
+* Customer Management
+* Order Management
+* Responsive Sidebar
+* Dashboard Analytics
+
+---
+
+### 🎨 UI Features
+
+* Fully Responsive
+* Premium Furniture Design
+* Luxury White & Brown Theme
+* Smooth Animations
+* Modern Dashboard
+* Loading States
+* Toast Notifications
+
+---
+
+# 🛠 Tech Stack
+
+## Frontend
+
+* React.js
+* Vite
+* Tailwind CSS
+* DaisyUI
+* Better Auth
+* React Router
+* React Hook Form
+* React Hot Toast
+* React Icons
+* Framer Motion
+* Recharts
+
+---
+
+# 📁 Project Structure
+
+```text
+src/
+│
+├── assets/
+├── components/
+│   ├── dashboard/
+│   ├── products/
+│   ├── cart/
+│   ├── profile/
+│   ├── NavBar/
+│   ├── router/
+│   └── auth/
+│
+├── lib/
+├── hooks/
+├── utils/
+├── App.jsx
+├── main.jsx
+└── index.css
+```
+
+---
+
+# 📦 Installation
+
+Clone the repository
+
+```bash
+git clone <repository-url>
+```
+
+Move into the project
+
+```bash
+cd woodora-furniture-client
+```
+
+Install dependencies
+
+```bash
+npm install
+```
+
+Run the development server
+
+```bash
+npm run dev
+```
+
+Build for production
+
+```bash
+npm run build
+```
+
+Preview production build
+
+```bash
+npm run preview
+```
+
+---
+
+# ⚙ Environment Variables
+
+Create a `.env` file in the project root.
+
+```env
+VITE_API_URL=http://localhost:5000
+
+VITE_BETTER_AUTH_URL=http://localhost:5000
+
+VITE_UPLOADTHING_TOKEN=your_token
+```
+
+---
+
+# 📄 Pages
+
+* Home
+* Products
+* Product Details
+* Shopping Cart
+* Login
+* Registration
+* Profile
+* Dashboard Overview
+* Product Management
+* Orders
+* Customers
+
+---
+
+# 🎯 Main Functionalities
+
+* User Authentication
+* Product Browsing
+* Product Search
+* Shopping Cart
+* Admin Dashboard
+* CRUD Operations
+* Responsive Design
+* Protected Routes
+* API Integration
+* Real-time Notifications
+
+---
+
+# 📱 Responsive Design
+
+Optimized for:
+
+* Desktop
+* Laptop
+* Tablet
+* Mobile
+
+---
+
+# 📡 API Integration
+
+The frontend communicates with the backend using REST APIs.
+
+Examples:
+
+* GET `/products`
+* GET `/products/:id`
+* POST `/cart`
+* GET `/cart/:email`
+* DELETE `/cart/:id`
+* POST `/api/auth/sign-in`
+* POST `/api/auth/sign-up`
+
+---
+
+# 🎨 Theme Colors
+
+| Color                | Hex       |
+| -------------------- | --------- |
+| Primary              | `#b6845c` |
+| Background           | `#ffffff` |
+| Secondary Background | `#faf8f6` |
+| Text                 | `#1f2937` |
+| Border               | `#e5e7eb` |
+
+---
+
+# 📦 Main Dependencies
+
+* React
+* React Router
+* Tailwind CSS
+* DaisyUI
+* Better Auth
+* Framer Motion
+* Recharts
+* React Hook Form
+* React Hot Toast
+* React Icons
+
+---
+
+# 🚀 Deployment
+
+Frontend can be deployed on:
+
+* Vercel
+* Netlify
+* Firebase Hosting
+
+Backend can be deployed on:
+
+* Render
+* Railway
+* VPS
+
+---
+
+# 👨‍💻 Author
+
+**Mehedi Hasan Topu**
+
+**Full Stack Web Developer**
+
+📧 [topu9872@gmail.com](mailto:topu9872@gmail.com)
+
+🌐 Portfolio: https://topudev.vercel.app
+
+💼 LinkedIn: https://www.linkedin.com/in/mehedi-hasan-topu
+
+💻 GitHub: https://github.com/topu9872-cpu
+
+
+
+---
+
+⭐ If you like this project, consider giving it a star on GitHub!
