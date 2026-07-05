@@ -36,7 +36,6 @@ const NavBar = () => {
     });
   };
 
-  console.log(dbUser)
   const NavData = (
     <>
       <li>

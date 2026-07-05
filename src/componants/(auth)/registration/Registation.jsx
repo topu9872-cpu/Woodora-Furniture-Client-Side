@@ -36,19 +36,22 @@ const Registation = () => {
       toast.error("Registation failed ");
     }
   };
-  const frontendURL = window.location.origin;
 
   const signInGoogle = async () => {
     await authClient.signIn.social({
       provider: "google",
-      callbackURL: `${frontendURL}/`,
+callbackURL: 'https://woodora-furniture-client-side.vercel.app' || '/',
+  errorCallbackURL: "/login",
+
     });
   };
 
   const signInGitHub = async () => {
     await authClient.signIn.social({
       provider: "github",
-      callbackURL: `${frontendURL}/`,
+callbackURL: 'https://woodora-furniture-client-side.vercel.app' || '/',
+  errorCallbackURL: "/login",
+
     });
   };
   return (
