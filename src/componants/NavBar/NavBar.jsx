@@ -36,6 +36,7 @@ const NavBar = () => {
     });
   };
 
+  console.log(dbUser)
   const NavData = (
     <>
       <li>
@@ -101,7 +102,7 @@ const NavBar = () => {
           </a>
         </div>
 
-        <div className="navbar-center hidden lg:flex">
+        <div className="navbar-center hidden md:flex">
           <ul className="menu-horizontal gap-4 rounded-full border-2 border-gray-300 bg-white p-2">
             {NavData}
           </ul>

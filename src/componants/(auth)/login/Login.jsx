@@ -29,10 +29,7 @@ const Login = () => {
     navigate("/");
   };
 
-  const frontendURL =
-    import.meta.env.VITE_APP_URL && !/localhost|127\.0\.0\.1/.test(import.meta.env.VITE_APP_URL)
-      ? import.meta.env.VITE_APP_URL
-      : window.location.origin;
+ const frontendURL = window.location.origin;
 
   const signInGoogle = async () => {
     await authClient.signIn.social({
