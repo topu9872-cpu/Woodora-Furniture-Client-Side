@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   getProductDetails,
   getProductsPost,
@@ -8,18 +8,18 @@ import toast from "react-hot-toast";
 import { authClient } from "../lib/auth-client";
 
 const ProductDetails = () => {
-    const { data: session, isPending } = authClient.useSession();
-    const user = session?.user;
-console.log(user)
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
 
   const { id } = useParams();
   const [details, setDetails] = useState(null);
 
-  const [, setPost] = useState([]);
-
   const handleBookingItems = async () => {
+    if (!user?.email) {
+      toast.error("Please log in to place an order.");
+      return;
+    }
 
-   
     const booking = {
       productId: details._id,
       name: details.name,
@@ -29,11 +29,11 @@ console.log(user)
       color: details.color,
       material: details.material,
       description: details.description,
-      email:user?.email
+      email: user?.email,
     };
 
     const cart = await getProductsPost(booking);
-    setPost(cart);
+
     if (cart) {
       toast.success("Order placed successfully!");
     } else {
@@ -42,11 +42,20 @@ console.log(user)
   };
 
   useEffect(() => {
+    let active = true;
+
     const handleDetails = async () => {
       const detailsData = await getProductDetails(id);
-      setDetails(detailsData);
+      if (active) {
+        setDetails(detailsData);
+      }
     };
+
     handleDetails();
+
+    return () => {
+      active = false;
+    };
   }, [id]);
 
   if (!details)

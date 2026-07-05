@@ -1,9 +1,8 @@
-import React from "react";
 import { MdOutlineAttachMoney, MdOutlineStar } from "react-icons/md";
 import AdminEditProduct from "./AdminEditProduct";
 import DeleteBtn from "./deleteBtn";
 
-const AdminProductTable = ({ products }) => {
+const AdminProductTable = ({ products = [], loading = false, error = "" }) => {
   return (
     <div className="p-4 w-full bg-[#f8f8f8]">
       <div className="overflow-x-auto w-full bg-white rounded-2xl border border-[#ececec] shadow-sm">
@@ -20,11 +19,30 @@ const AdminProductTable = ({ products }) => {
 
           {/* Table Body */}
           <tbody className="divide-y divide-[#ececec]/60 text-sm text-[#1f2937]">
-            {products.map((product) => (
-              <tr 
-                key={product._id} 
-                className="hover:bg-[#faf8f6]/50 transition-colors duration-200 group"
-              >
+            {loading ? (
+              <tr>
+                <td colSpan="4" className="py-10 text-center text-sm text-[#6b7280]">
+                  Loading products...
+                </td>
+              </tr>
+            ) : error ? (
+              <tr>
+                <td colSpan="4" className="py-10 text-center text-sm text-red-600">
+                  {error}
+                </td>
+              </tr>
+            ) : products.length === 0 ? (
+              <tr>
+                <td colSpan="4" className="py-10 text-center text-sm text-[#6b7280]">
+                  No products found.
+                </td>
+              </tr>
+            ) : (
+              products.map((product) => (
+                <tr 
+                  key={product._id} 
+                  className="hover:bg-[#faf8f6]/50 transition-colors duration-200 group"
+                >
                 {/* Image & Name */}
                 <td className="py-4 px-6">
                   <div className="flex items-center space-x-4">
@@ -70,7 +88,8 @@ const AdminProductTable = ({ products }) => {
                   </div>
                 </td>
               </tr>
-            ))}
+              ))
+            )}
           </tbody>
         </table>
       </div>

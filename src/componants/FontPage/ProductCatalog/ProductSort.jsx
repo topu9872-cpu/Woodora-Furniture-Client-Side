@@ -1,6 +1,4 @@
-import { useMemo, useState } from "react";
-
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { getProductsSearch } from "../../../../public/ServerData/ServerData";
 
 const ProductSort = () => {
@@ -14,12 +12,21 @@ const ProductSort = () => {
     { id: "office", label: "Office" },
   ];
 
-  useMemo(() => {
+  useEffect(() => {
+    let ignore = false;
+
     const handleProductData = async () => {
-      const ProductsData = await getProductsSearch();
-      setProducts(ProductsData);
+      const productsData = await getProductsSearch();
+      if (!ignore) {
+        setProducts(productsData);
+      }
     };
+
     handleProductData();
+
+    return () => {
+      ignore = true;
+    };
   }, []);
 
   const filteredProducts =

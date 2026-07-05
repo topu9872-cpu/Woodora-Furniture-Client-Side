@@ -4,26 +4,35 @@ import { getEditProduct } from "../../../public/ServerData/ServerData";
 const AdminEditProduct = ({ product }) => {
   const handleProductEdit = async (e) => {
     e.preventDefault();
-    const formData = Object.fromEntries(new FormData(e.target));
 
-    const data = {
-      name: formData.name,
-      price: formData.price,
-      rating: formData.rating,
-      material: formData.material,
-      category: formData.category,
-      description: formData.description,
-      image: formData.image,
-    };
-    const editFunction = await getEditProduct(product._id, data);
-    if (editFunction) {
-      setTimeout(() => {
-        toast.success("product update successfully !", {
-          position: "top-right",
-        });
-      }, 1000);
+    try {
+      const formData = Object.fromEntries(new FormData(e.target));
 
-      document.getElementById(`edit_${product._id}`).close();
+      const data = {
+        name: formData.name,
+        price: formData.price,
+        rating: formData.rating,
+        material: formData.material,
+        category: formData.category,
+        description: formData.description,
+        image: formData.image,
+      };
+
+      const editFunction = await getEditProduct(product._id, data);
+
+      if (editFunction) {
+        setTimeout(() => {
+          toast.success("Product updated successfully!", {
+            position: "top-right",
+          });
+        }, 1000);
+
+        document.getElementById(`edit_${product._id}`).close();
+      } else {
+        toast.error("Failed to update product.");
+      }
+    } catch (err) {
+      toast.error(err.message || "Failed to update product.");
     }
   };
 

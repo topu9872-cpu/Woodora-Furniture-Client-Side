@@ -1,4 +1,3 @@
-import React from "react";
 import { authClient } from "../lib/auth-client";
 import { Navigate, useNavigate } from "react-router";
 import ProfileEdit from "./ProfileEdit";

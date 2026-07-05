@@ -8,23 +8,31 @@ import { useEffect, useState } from "react";
 const DashboardLayout = () => {
   const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
-  const [dbUser, setDbUser] = useState(null);
-  const [checking, setChecking] = useState(true);
+  const [dbUser, setDbUser] = useState(undefined);
 
   useEffect(() => {
-    if (isPending) return;
+    if (isPending || !user?.email) return;
 
-    if (!user?.email) {
-      setChecking(false);
-      return;
-    }
+    let active = true;
 
     getUsers(user.email)
-      .then(setDbUser)
-      .finally(() => setChecking(false));
+      .then((userData) => {
+        if (active) {
+          setDbUser(userData ?? null);
+        }
+      })
+      .catch(() => {
+        if (active) {
+          setDbUser(null);
+        }
+      });
+
+    return () => {
+      active = false;
+    };
   }, [isPending, user?.email]);
 
-  if (isPending || checking) {
+  if (isPending || (user?.email && dbUser === undefined)) {
     return <div className="p-6">Loading...</div>;
   }
 

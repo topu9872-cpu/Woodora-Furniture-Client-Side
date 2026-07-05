@@ -4,7 +4,7 @@ import { getCartDelete } from "../../../public/ServerData/ServerData";
 
 const DeleteCart = ({ c, setCart }) => {
   const handleDelete = async (id) => {
-    const deleteCart = await getCartDelete(id);
+    await getCartDelete(id);
 
     toast.success(`${c.name} is deleted !`);
     setCart((prv) => prv.filter((item) => item._id !== id));

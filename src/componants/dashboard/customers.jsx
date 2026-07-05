@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FiUsers, FiMail, FiCalendar, FiShield, FiTrash2 } from "react-icons/fi";
 import { getAllUsers } from "../../../public/ServerData/ServerData";
 
@@ -9,12 +9,39 @@ import { getAllUsers } from "../../../public/ServerData/ServerData";
 const CustomersTable =() => {
    
      const [customers, setCustomers] = useState([]);
+     const [loading, setLoading] = useState(true);
+     const [error, setError] = useState("");
+
       useEffect(() => {
+        let active = true;
+
         const handleCustomers = async () => {
-           const customers = await getAllUsers();
-          setCustomers(customers);
+          try {
+            setLoading(true);
+            setError("");
+
+            const customersData = await getAllUsers();
+
+            if (active) {
+              setCustomers(Array.isArray(customersData) ? customersData : []);
+            }
+          } catch (err) {
+            if (active) {
+              setCustomers([]);
+              setError(err.message || "Failed to load customers.");
+            }
+          } finally {
+            if (active) {
+              setLoading(false);
+            }
+          }
         };
+
         handleCustomers();
+
+        return () => {
+          active = false;
+        };
       }, []);
   return (
     <div className="p-4 w-full bg-[#f8f8f8] min-h-screen">
@@ -45,7 +72,19 @@ const CustomersTable =() => {
           </thead>
 
           <tbody className="divide-y divide-[#ececec]/60 text-sm text-[#1f2937]">
-            {customers.length === 0 ? (
+            {loading ? (
+              <tr>
+                <td colSpan="5" className="py-10 text-center text-xs font-medium text-[#6b7280]">
+                  Loading customer records...
+                </td>
+              </tr>
+            ) : error ? (
+              <tr>
+                <td colSpan="5" className="py-10 text-center text-xs font-medium text-red-600">
+                  {error}
+                </td>
+              </tr>
+            ) : customers.length === 0 ? (
               <tr>
                 <td colSpan="5" className="py-10 text-center text-xs font-medium text-[#6b7280]">
                   No user records registered inside the database framework.

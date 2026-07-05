@@ -6,11 +6,17 @@ import toast from "react-hot-toast";
 const DeleteBtn = ({product}) => {
 
     const handleDelete=async(id)=>{
-    const deleteCard=await getDeleteProducts(id);
-     if (deleteCard.deletedCount > 0) {
-    toast.success("Product Deleted Successfully");
+    try {
+      const deleteCard=await getDeleteProducts(id);
 
-  }
+      if (deleteCard?.deletedCount > 0) {
+        toast.success("Product deleted successfully");
+      } else {
+        toast.error("Failed to delete product.");
+      }
+    } catch (err) {
+      toast.error(err.message || "Failed to delete product.");
+    }
 }
 
 

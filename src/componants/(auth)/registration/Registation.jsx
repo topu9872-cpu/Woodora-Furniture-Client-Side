@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { Link, useNavigate } from "react-router";
 import { authClient } from "../../lib/auth-client";
@@ -37,7 +37,9 @@ const Registation = () => {
     }
   };
   const frontendURL =
-    import.meta.env.VITE_APP_URL ?? window.location.origin;
+    import.meta.env.VITE_APP_URL && !/localhost|127\.0\.0\.1/.test(import.meta.env.VITE_APP_URL)
+      ? import.meta.env.VITE_APP_URL
+      : window.location.origin;
 
   const signInGoogle = async () => {
     await authClient.signIn.social({

@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import ProductSort from "./ProductSort";
 
 const ProjuctCatalog = () => {

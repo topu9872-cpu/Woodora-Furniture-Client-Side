@@ -1,6 +1,5 @@
 import { MdOutlineAttachMoney, MdOutlineStar } from "react-icons/md";
 import { Link } from "react-router";
-import { getProductsPost } from "../../../public/ServerData/ServerData";
 import { Suspense } from "react";
 
 const AllCards = ({ products }) => {

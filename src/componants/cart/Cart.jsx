@@ -1,10 +1,7 @@
 
-
-
-import { getCartDelete, getCustomarsCartProducts } from "../../../public/ServerData/ServerData";
+import { getCustomarsCartProducts } from "../../../public/ServerData/ServerData";
 import { useEffect, useState } from "react";
 import { Link, Navigate } from "react-router";
-import toast from "react-hot-toast";
 import DeleteCart from "./DeleteCart";
 import { authClient } from "../lib/auth-client";
 
@@ -13,30 +10,34 @@ const Cart = () => {
   const user = session?.user;
 
   const [cart, setCart] = useState([]);
-  const [cartLoading, setCartLoading] = useState(true);
 
   useEffect(() => {
-    if (isPending) return;
-    if (!user?.email) {
-      setCartLoading(false);
-      return;
-    }
+    if (isPending || !user?.email) return;
+
+    let active = true;
 
     const handleCart = async () => {
       try {
         const cartData = await getCustomarsCartProducts(user.email);
-        setCart(cartData ?? []);
+        if (active) {
+          setCart(cartData ?? []);
+        }
       } catch (error) {
         console.error(error);
-      } finally {
-        setCartLoading(false);
+        if (active) {
+          setCart([]);
+        }
       }
     };
 
     handleCart();
+
+    return () => {
+      active = false;
+    };
   }, [isPending, user?.email]);
 
-  if (isPending || cartLoading) {
+  if (isPending) {
     return <div className="p-6 text-center">Loading...</div>;
   }
 

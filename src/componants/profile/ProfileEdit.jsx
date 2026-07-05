@@ -6,27 +6,28 @@ import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 
 const ProfileEdit = ({ user }) => {
-  const [form, setForm] = useState({
-    name: "",
-    phone: "",
-    location: "",
-  });
+  const [form, setForm] = useState(() => ({
+    name: user?.name || "",
+    phone: user?.phone || "",
+    location: user?.location || "",
+  }));
 
   const [imageFile, setImageFile] = useState(null);
-  const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (user) {
+    if (!user) return;
+
+    const timer = window.setTimeout(() => {
       setForm({
         name: user.name || "",
         phone: user.phone || "",
         location: user.location || "",
       });
-
-      setPreview(user.image || null);
       setImageFile(null);
-    }
+    }, 0);
+
+    return () => window.clearTimeout(timer);
   }, [user]);
 
   const handleChange = (key, value) => {
@@ -69,20 +70,21 @@ const ProfileEdit = ({ user }) => {
         imageUrl = await uploadImage(imageFile);
       }
 
-      const res = await authClient.updateUser({
+      await authClient.updateUser({
         name: form.name,
         phone: form.phone,
         location: form.location,
         image: imageUrl,
       });
+
+      toast.success("Profile updated!");
+      window.setTimeout(() => {
+        window.location.reload();
+      }, 500);
     } catch (err) {
       toast.error(err.message || "Update failed!");
     } finally {
       setLoading(false);
-      toast.success("Profile updated!");
-      setTimeout(()=>{
-        window.location.reload()
-      },500)
     }
   };
 
@@ -141,7 +143,6 @@ const ProfileEdit = ({ user }) => {
 
                         if (file instanceof File) {
                           setImageFile(file);
-                          setPreview(URL.createObjectURL(file));
                         }
                       }}
                     />

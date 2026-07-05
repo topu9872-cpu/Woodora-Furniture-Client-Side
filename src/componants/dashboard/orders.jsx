@@ -1,25 +1,42 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { FiShoppingBag, FiTruck, FiDollarSign, FiClock, FiTrash2, FiEye } from "react-icons/fi";
 import { getCartProducts } from "../../../public/ServerData/ServerData";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
+    let active = true;
+
     const fetchOrders = async () => {
       try {
-        // Handle both function calls and raw object imports safely
-        const data = typeof getCartProducts === "function" ? await getCartProducts() : await getCartProducts;
-        setOrders(data || []);
+        setLoading(true);
+        setError("");
+
+        const data = await getCartProducts();
+
+        if (active) {
+          setOrders(Array.isArray(data) ? data : []);
+        }
       } catch (error) {
-        console.error("Error fetching order infrastructure streams:", error);
+        if (active) {
+          setOrders([]);
+          setError(error.message || "Failed to load orders.");
+        }
       } finally {
-        setLoading(false);
+        if (active) {
+          setLoading(false);
+        }
       }
     };
 
     fetchOrders();
+
+    return () => {
+      active = false;
+    };
   }, []);
 
   return (
@@ -56,6 +73,12 @@ const Orders = () => {
                 <td colSpan="5" className="py-10 text-center text-xs font-medium text-[#6b7280]">
                   <span className="loading loading-spinner loading-sm text-[#b6845c] mr-2"></span>
                   Synchronizing active database streams...
+                </td>
+              </tr>
+            ) : error ? (
+              <tr>
+                <td colSpan="5" className="py-10 text-center text-xs font-medium text-red-600">
+                  {error}
                 </td>
               </tr>
             ) : orders.length === 0 ? (
