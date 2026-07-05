@@ -4,7 +4,7 @@ const Banner = () => {
   return (
     <div className="relative  top-0"
       style={{
-      backgroundImage:"url('/assets/alyssa-hurley-yekIZ4ltv1o-unsplash.jpg')"
+      backgroundImage:"url('/alyssa-hurley-yekIZ4ltv1o-unsplash.jpg')"
     }}>
     <div className="w-11/12  mx-auto py-20 "
   
@@ -57,7 +57,7 @@ const Banner = () => {
        
         <div className="flex justify-center">
           <img
-            src='src\assets\spacejoy-RqO6kwm4tZY-unsplash.jpg'
+            src='/ServerData/spacejoy-RqO6kwm4tZY-unsplash.jpg'
             alt="Modern Furniture"
             className="w-full max-w-md rounded-full shadow-2xl object-cover"
           />
